@@ -1,0 +1,19 @@
+class Database:
+  def query(self, text):
+    raise NotImplementedError
+
+class RealDatabase(Database):
+  def query(self, text):
+    print("Executing query:", text)
+
+class DatabaseProxy(Database):
+  def __init__(self, allowed):
+    self.allowed = allowed
+    self.real = RealDatabase()
+
+  def query(self, text):
+    if self.allowed:
+      self.real.query(text)
+    else:
+      print("Access denied")
+

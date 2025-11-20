@@ -1,0 +1,14 @@
+class ExternalLogger:
+    def write_msg(self, msg):
+        print("External log:", msg)
+
+class Logger:
+    def log(self, message):
+        raise NotImplementedError
+
+class LoggerAdapter(Logger):
+    def __init__(self, external):
+        self.external = external
+
+    def log(self, message):
+        self.external.write_msg(message)

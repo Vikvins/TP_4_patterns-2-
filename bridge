@@ -1,0 +1,26 @@
+class Device:
+  def output(self, data):
+    raise NotImplementedError
+
+class Monitor(Device):
+  def output(self, data):
+    print("Monitor:", data)
+
+class Printer(Device):
+  def output(self, data):
+    print("Printer:", data)
+
+class Output:
+  def __init__(self, device):
+    self.device = device
+
+  def render(self, data):
+    raise NotImplementedError
+
+class TextOutput(Output):
+  def render(self, data):
+    self.device.output("Text: " + data)
+
+class ImageOutput(Output):
+  def render(self, data):
+    self.device.output("Image: " + data)

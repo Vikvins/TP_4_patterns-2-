@@ -1,0 +1,41 @@
+class SortingStrategy:
+  def sort(self, data):
+    raise NotImplementedError
+
+class BubbleSortStrategy(SortingStrategy):
+  def sort(self, data):
+    arr = data.copy()
+    n = len(arr)
+    for i in range(n):
+      for j in range(0, n - i - 1):
+        if arr[j] > arr[j + 1]:
+          arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    print("BubbleSort result:", arr)
+    return arr
+
+class QuickSortStrategy(SortingStrategy):
+  def sort(self, data):
+    def qsort(a):
+      if len(a) <= 1:
+        return a
+      pivot = a[len(a) // 2]
+      left = [x for x in a if x < pivot]
+      middle = [x for x in a if x == pivot]
+      right = [x for x in a if x > pivot]
+      return qsort(left) + middle + qsort(right)
+
+    res = qsort(data.copy())
+    print("QuickSort result:", res)
+    return res
+
+class Sorter:
+  def __init__(self, strategy: SortingStrategy = None):
+    self._strategy = strategy
+
+  def set_strategy(self, strategy: SortingStrategy):
+    self._strategy = strategy
+
+  def sort(self, data):
+    if not self._strategy:
+      raise RuntimeError('Strategy not set')
+    return self._strategy.sort(data)
